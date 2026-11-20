@@ -27,7 +27,13 @@ pipeline {
 
         stage('Limpiar despliegue anterior') {
             steps {
-                bat 'docker-compose -H npipe:////./pipe/dockerDesktopLinuxEngine -f docker-compose-desacoplado.yml down --remove-orphans'
+                bat '''
+                    @echo off
+                    for %%C in (proyectos-micros proyectos-micros-2 microservicio-cliente loader-balancer) do (
+                        docker -H npipe:////./pipe/dockerDesktopLinuxEngine rm -f %%C 2>nul
+                    )
+                    exit /b 0
+                '''
             }
         }
 
