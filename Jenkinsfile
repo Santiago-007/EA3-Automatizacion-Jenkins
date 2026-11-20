@@ -13,25 +13,26 @@ pipeline {
             steps {
                 bat 'where docker'
                 bat 'docker --version'
-                bat 'docker compose version'
+                bat 'where docker-compose'
+                bat 'docker-compose --version'
             }
         }
 
         stage('Construir imagenes Docker') {
             steps {
-                bat 'docker compose -f docker-compose-desacoplado.yml build'
+                bat 'docker-compose -f docker-compose-desacoplado.yml build'
             }
         }
 
         stage('Desplegar aplicacion') {
             steps {
-                bat 'docker compose -f docker-compose-desacoplado.yml up -d'
+                bat 'docker-compose -f docker-compose-desacoplado.yml up -d'
             }
         }
 
         stage('Verificar contenedores') {
             steps {
-                bat 'docker compose -f docker-compose-desacoplado.yml ps'
+                bat 'docker-compose -f docker-compose-desacoplado.yml ps'
             }
         }
     }
