@@ -25,6 +25,12 @@ pipeline {
             }
         }
 
+        stage('Limpiar despliegue anterior') {
+            steps {
+                bat 'docker-compose -H npipe:////./pipe/dockerDesktopLinuxEngine -f docker-compose-desacoplado.yml down --remove-orphans'
+            }
+        }
+
         stage('Desplegar aplicacion') {
             steps {
                 bat 'docker-compose -H npipe:////./pipe/dockerDesktopLinuxEngine -f docker-compose-desacoplado.yml up -d'
