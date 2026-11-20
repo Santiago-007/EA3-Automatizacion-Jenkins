@@ -21,19 +21,19 @@ pipeline {
 
         stage('Construir imagenes Docker') {
             steps {
-                bat 'docker -H npipe:////./pipe/dockerDesktopLinuxEngine compose -f docker-compose-desacoplado.yml build'
+                bat 'docker-compose -H npipe:////./pipe/dockerDesktopLinuxEngine -f docker-compose-desacoplado.yml build'
             }
         }
 
         stage('Desplegar aplicacion') {
             steps {
-                bat 'docker -H npipe:////./pipe/dockerDesktopLinuxEngine compose -f docker-compose-desacoplado.yml up -d'
+                bat 'docker-compose -H npipe:////./pipe/dockerDesktopLinuxEngine -f docker-compose-desacoplado.yml up -d'
             }
         }
 
         stage('Verificar contenedores') {
             steps {
-                bat 'docker -H npipe:////./pipe/dockerDesktopLinuxEngine compose -f docker-compose-desacoplado.yml ps'
+                bat 'docker-compose -H npipe:////./pipe/dockerDesktopLinuxEngine -f docker-compose-desacoplado.yml ps'
             }
         }
     }
