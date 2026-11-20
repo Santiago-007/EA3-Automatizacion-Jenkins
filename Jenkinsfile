@@ -15,24 +15,25 @@ pipeline {
                 bat 'docker --version'
                 bat 'where docker-compose'
                 bat 'docker-compose --version'
+                bat 'docker -H npipe:////./pipe/dockerDesktopLinuxEngine info'
             }
         }
 
         stage('Construir imagenes Docker') {
             steps {
-                bat 'docker-compose -f docker-compose-desacoplado.yml build'
+                bat 'docker -H npipe:////./pipe/dockerDesktopLinuxEngine compose -f docker-compose-desacoplado.yml build'
             }
         }
 
         stage('Desplegar aplicacion') {
             steps {
-                bat 'docker-compose -f docker-compose-desacoplado.yml up -d'
+                bat 'docker -H npipe:////./pipe/dockerDesktopLinuxEngine compose -f docker-compose-desacoplado.yml up -d'
             }
         }
 
         stage('Verificar contenedores') {
             steps {
-                bat 'docker-compose -f docker-compose-desacoplado.yml ps'
+                bat 'docker -H npipe:////./pipe/dockerDesktopLinuxEngine compose -f docker-compose-desacoplado.yml ps'
             }
         }
     }
