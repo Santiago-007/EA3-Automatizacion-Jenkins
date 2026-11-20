@@ -9,6 +9,14 @@ pipeline {
             }
         }
 
+        stage('Comprobar Docker') {
+            steps {
+                bat 'where docker'
+                bat 'docker --version'
+                bat 'docker compose version'
+            }
+        }
+
         stage('Construir imagenes Docker') {
             steps {
                 bat 'docker compose -f docker-compose-desacoplado.yml build'
